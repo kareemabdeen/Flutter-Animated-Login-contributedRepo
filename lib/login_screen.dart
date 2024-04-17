@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:rive/rive.dart';
 import 'package:youtube_animated_login/animation_enum.dart';
 
@@ -40,6 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
     riveArtboard?.artboard.removeController(controllerFail);
     isLookingLeft = false;
     isLookingRight = false;
+  }
+
+  @override
+  void dispose() {
+    passwordFocusNode.removeListener;
+    super.dispose();
   }
 
   void addIdleController() {
@@ -110,10 +114,10 @@ class _LoginScreenState extends State<LoginScreen> {
     rootBundle.load('assets/login_animation.riv').then((data) {
       final file = RiveFile.import(data);
       final artboard = file.mainArtboard;
-      artboard.addController(controllerIdle);
       setState(() {
         riveArtboard = artboard;
       });
+      artboard.addController(controllerIdle);
     });
 
     checkForPasswordFocusNodeToChangeAnimationState();
