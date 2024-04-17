@@ -40,49 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
     isLookingRight = false;
   }
 
-  // void addIdleController() {
-  //   removeAllControllers();
-  //   riveArtboard?.artboard.addController(controllerIdle);
-  //   debugPrint("idleee");
-  // }
-
-  // void addHandsUpController() {
-  //   removeAllControllers();
-  //   riveArtboard?.artboard.addController(controllerHandsUp);
-  //   debugPrint("hands up");
-  // }
-
-  // void addHandsDownController() {
-  //   removeAllControllers();
-  //   riveArtboard?.artboard.addController(controllerHandsDown);
-  //   debugPrint("hands down");
-  // }
-
-  // void addSuccessController() {
-  //   removeAllControllers();
-  //   riveArtboard?.artboard.addController(controllerSuccess);
-  //   debugPrint("Success");
-  // }
-
-  // void addFailController() {
-  //   removeAllControllers();
-  //   riveArtboard?.artboard.addController(controllerFail);
-  //   debugPrint("Faillll");
-  // }
-
-  // void addLookRightController() {
-  //   removeAllControllers();
-  //   isLookingRight = true;
-  //   riveArtboard?.artboard.addController(controllerLookRight);
-  //   debugPrint("Righttt");
-  // }
-
-  // void addLookLeftController() {
-  //   removeAllControllers();
-  //   isLookingLeft = true;
-  //   riveArtboard?.artboard.addController(controllerLookLeft);
-  //   debugPrint("Leftttttt");
-  // }
   void addSpecifcAnimationAction(
       RiveAnimationController<dynamic> neededAnimationAction) {
     removeAllControllers();
