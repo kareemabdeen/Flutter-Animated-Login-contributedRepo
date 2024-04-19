@@ -46,6 +46,15 @@ class _LoginScreenState extends State<LoginScreen> {
     riveArtboard?.artboard.addController(neededAnimationAction);
   }
 
+  @override
+  void dispose() {
+    passwordFocusNode.removeListener;
+    super.dispose();
+  }
+
+
+  
+
   void checkForPasswordFocusNodeToChangeAnimationState() {
     passwordFocusNode.addListener(() {
       if (passwordFocusNode.hasFocus) {
