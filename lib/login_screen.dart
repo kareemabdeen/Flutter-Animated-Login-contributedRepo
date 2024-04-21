@@ -40,56 +40,27 @@ class _LoginScreenState extends State<LoginScreen> {
     isLookingRight = false;
   }
 
-  void addIdleController() {
+  void addSpecifcAnimationAction(
+      RiveAnimationController<dynamic> neededAnimationAction) {
     removeAllControllers();
-    riveArtboard?.artboard.addController(controllerIdle);
-    debugPrint("idleee");
+    riveArtboard?.artboard.addController(neededAnimationAction);
   }
 
-  void addHandsUpController() {
-    removeAllControllers();
-    riveArtboard?.artboard.addController(controllerHandsUp);
-    debugPrint("hands up");
+  @override
+  void dispose() {
+    passwordFocusNode.removeListener;
+    super.dispose();
   }
 
-  void addHandsDownController() {
-    removeAllControllers();
-    riveArtboard?.artboard.addController(controllerHandsDown);
-    debugPrint("hands down");
-  }
 
-  void addSuccessController() {
-    removeAllControllers();
-    riveArtboard?.artboard.addController(controllerSuccess);
-    debugPrint("Success");
-  }
-
-  void addFailController() {
-    removeAllControllers();
-    riveArtboard?.artboard.addController(controllerFail);
-    debugPrint("Faillll");
-  }
-
-  void addLookRightController() {
-    removeAllControllers();
-    isLookingRight = true;
-    riveArtboard?.artboard.addController(controllerLookRight);
-    debugPrint("Righttt");
-  }
-
-  void addLookLeftController() {
-    removeAllControllers();
-    isLookingLeft = true;
-    riveArtboard?.artboard.addController(controllerLookLeft);
-    debugPrint("Leftttttt");
-  }
+  
 
   void checkForPasswordFocusNodeToChangeAnimationState() {
     passwordFocusNode.addListener(() {
       if (passwordFocusNode.hasFocus) {
-        addHandsUpController();
+        addSpecifcAnimationAction(controllerHandsUp);
       } else if (!passwordFocusNode.hasFocus) {
-        addHandsDownController();
+        addSpecifcAnimationAction(controllerHandsDown);
       }
     });
   }
@@ -105,24 +76,30 @@ class _LoginScreenState extends State<LoginScreen> {
     controllerSuccess = SimpleAnimation(AnimationEnum.success.name);
     controllerFail = SimpleAnimation(AnimationEnum.fail.name);
 
-    rootBundle.load('assets/login_animation.riv').then((data) {
-      final file = RiveFile.import(data);
-      final artboard = file.mainArtboard;
-      setState(() {
-        riveArtboard = artboard;
-      });
-      artboard.addController(controllerIdle);
-    });
-
+    loadRiveFileWithItsStates();
+    
     checkForPasswordFocusNodeToChangeAnimationState();
+  }
+
+  void loadRiveFileWithItsStates() {
+    rootBundle.load('assets/login_animation.riv').then(
+      (data) {
+        final file = RiveFile.import(data);
+        final artboard = file.mainArtboard;
+        artboard.addController(controllerIdle);
+        setState(() {
+          riveArtboard = artboard;
+        });
+      },
+    );
   }
 
   void validateEmailAndPassword() {
     Future.delayed(const Duration(seconds: 1), () {
       if (formKey.currentState!.validate()) {
-        addSuccessController();
+        addSpecifcAnimationAction(controllerSuccess);
       } else {
-        addFailController();
+        addSpecifcAnimationAction(controllerFail);
       }
     });
   }
@@ -162,11 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (value.isNotEmpty &&
                           value.length < 16 &&
                           !isLookingLeft) {
-                        addLookLeftController();
+                        addSpecifcAnimationAction(controllerLookLeft);
                       } else if (value.isNotEmpty &&
                           value.length > 16 &&
                           !isLookingRight) {
-                        addLookRightController();
+                        addSpecifcAnimationAction(controllerLookRight);
                       }
                     },
                   ),
